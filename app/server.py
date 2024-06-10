@@ -44,6 +44,8 @@ async def pause_game():
 async def resume_game():
     if not state.running:
         return {"message": "Game not running"}
+    elif not state.paused:
+        return {"message": "Game is running but not paused"}
     state.paused = False
     pause_event.clear()
     return {"message": "Game resumed"}
