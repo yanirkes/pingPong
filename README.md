@@ -20,7 +20,8 @@ This project implements a simple Pong game using two FastAPI servers that ping-p
 
    ```sh
    git clone https://github.com/yourusername/pong-game-server.git
-   cd pong-game-server```
+   cd pong-game-server
+   ```
    
 2. **Running the Servers**:
 
