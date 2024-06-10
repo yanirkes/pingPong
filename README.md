@@ -37,11 +37,6 @@ This project implements a simple Pong game using two FastAPI servers that ping-p
 
 3. **Using the CLI Tool**:
 
-  Navigate to the app directory:
-   ```sh
-  cd app
-  ```
-
   Start the game:
    ```sh
   python -m app.CLI start 1000
