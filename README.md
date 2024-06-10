@@ -5,9 +5,6 @@ This project implements a simple Pong game using two FastAPI servers that ping-p
 
 --------
 
-## To get startede
-Clone the repository:
-
 ## Requirements
 
 - Python 3.7+
@@ -15,7 +12,9 @@ Clone the repository:
 - Uvicorn
 - Requests
 
-## Installation
+---------
+
+## To get startede
 
 1. **Clone the repository**:
 
