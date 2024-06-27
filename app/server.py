@@ -17,7 +17,9 @@ TARGET_SERVER_URL = None
 @app.get("/ping")
 async def ping():
     if state.running and not state.paused:
-        return "pong"
+        time.sleep(state.pong_time_ms / 1000.0)
+        Thread(target = initial_ping).start()
+    return "pong"
     raise HTTPException(status_code=503, detail="Server not ready")
 
 @app.get("/start")
@@ -29,7 +31,7 @@ async def start_game(pong_time_ms: int):
     state.pong_time_ms = pong_time_ms
     stop_event.clear()
     pause_event.clear()
-    Thread(target=ping_pong_loop).start()
+    Thread(target=initial_ping).start()
     return {"message": "Game started"}
 
 @app.get("/pause")
@@ -58,16 +60,15 @@ async def stop_game():
     stop_event.set()
     return {"message": "Game stopped"}
 
-def ping_pong_loop():
-    while not stop_event.is_set():
-        if not state.paused:
-            try:
-                response = requests.get(TARGET_SERVER_URL)
-                if response.status_code == 200:
-                    print(f"Received pong from {TARGET_SERVER_URL}")
-            except requests.RequestException as e:
-                print(f"Error sending ping to {TARGET_SERVER_URL}: {e}")
-        time.sleep(state.pong_time_ms / 1000.0)
+def initial_ping():
+    if not state.paused:
+        try:
+            response = requests.get(TARGET_SERVER_URL)
+            if response.status_code == 200:
+                print(f"Received pong from {TARGET_SERVER_URL}")
+        except requests.RequestException as e:
+            print(f"Error sending ping to {TARGET_SERVER_URL}: {e}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Start a Pong server instance")
